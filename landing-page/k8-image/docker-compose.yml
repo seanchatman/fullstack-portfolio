@@ -1,0 +1,11 @@
+# DC for local development and pushing to GCP Registry
+version: '3.7'
+services:
+  dykt-client:
+    image: 'gcr.io/dkyt-275519/dykt-client-image:1.0.0' # Google Cloud Image Repository
+    build:
+      context: .
+    ports:
+      - '8080:8080' # Ingress exposes this on port 80 in K8
+    volumes:
+      - '.:/app'

@@ -3,9 +3,12 @@ kind: Config
 
 build:
   artifacts:
-  - image: gcr.io/dkyt-275519/dykt-api-image
-    context: backend
-  local: {}
+  - image: enterprise-client
+    context: enterprise-client
+  - image: landing-page
+    context: landing-page
+  - image: timesheet-client
+    context: timesheet-client
 
 deploy:
   helm:
@@ -13,7 +16,7 @@ deploy:
       - name: dev
         chartPath: charts
         values:
-          image: gcr.io/dkyt-275519/dykt-api-image
+          image: enterprise-client
 
 profiles:
   - name: dev
@@ -21,12 +24,11 @@ profiles:
       - command: dev
     build:
       artifacts:
-      - image: gcr.io/dkyt-275519/dykt-api-image
-        context: backend
+      - image: enterprise-client
+        context: enterprise-client
         docker:
           buildArgs:
             ENV: production
-            MONGO_URI: mongodb://dev-mongodb:27017/dykt-api
         sync:
           manual:
           # Sync all the javascript files that are in the src folder
